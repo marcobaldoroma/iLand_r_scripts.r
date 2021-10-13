@@ -38,10 +38,6 @@ library(dplyr)
 
 # subsetting: https://dplyr.tidyverse.org/reference/filter.html
 
-x6 <- filter(abeStand, standid == "70")
-stid3 <- ggplot(x2, aes(year, volume)) + geom_area() + ggtitle("Stand ID 70 (area 6.5 ha)")
-stid3 + theme(plot.title =element_text(hjust = 0.5))
-
 
 x <- filter(abeStand, standid == "2021")
 stid1 <-ggplot(x, aes(year,volume)) + geom_area() + ggtitle("Stand ID 2021 (area 4.35ha)")
@@ -69,19 +65,22 @@ stid3 + theme(plot.title =element_text(hjust = 0.5))
 
 
 x3 <- filter(abeStand, standid == "846")
-stid3 <- ggplot(x2, aes(year, volume)) + geom_area() + ggtitle("Stand ID 846 (area 17.29 ha)")
+stid3 <- ggplot(x3, aes(year, volume)) + geom_area() + ggtitle("Stand ID 846 (area 17.29 ha)")
 stid3 + theme(plot.title =element_text(hjust = 0.5))
 
 
 x4 <- filter(abeStand, standid == "1173")
-stid3 <- ggplot(x2, aes(year, volume)) + geom_area() + ggtitle("Stand ID 1173 (area 1.55 ha)")
+stid3 <- ggplot(x4, aes(year, volume)) + geom_area() + ggtitle("Stand ID 1173 (area 1.55 ha)")
 stid3 + theme(plot.title =element_text(hjust = 0.5))
 
 
 x5 <- filter(abeStand, standid == "2020")
-stid3 <- ggplot(x2, aes(year, volume)) + geom_area() + ggtitle("Stand ID 2020 (area 1.49 ha)")
+stid3 <- ggplot(x5, aes(year, volume)) + geom_area() + ggtitle("Stand ID 2020 (area 1.49 ha)")
 stid3 + theme(plot.title =element_text(hjust = 0.5))
 
+x6 <- filter(abeStand, standid == "70")
+stid3 <- ggplot(x6, aes(year, volume)) + geom_area() + ggtitle("Stand ID 70 (area 6.5 ha)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
 
 # volume-year x stand colour by species
 spvol <- filter(stand, rid == "8411")
