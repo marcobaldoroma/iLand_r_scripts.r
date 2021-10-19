@@ -1,3 +1,5 @@
+# Create the first analysis report. I create the first plots and graphs using the stands of part of the CZ case study for a 75 year Time series in iLand forest model. I select 7 different stands and after a period of 75 years. I compared the wood volume dynamics in this different stand. I also compared the volume at the DBH in one stand, and a superficial boxplot statistical and logarithm analysis for one "RU".
+
 # install.packages("RSQLite")
 library(RSQLite)
 
