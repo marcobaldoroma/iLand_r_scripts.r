@@ -127,4 +127,4 @@ library (tinytex)         # librerie necessarie
 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
 
-stitch("D:/iLand.r/GCFRG_1st_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))  
+stitch("D:/iLand.r/script_13.10_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))  
