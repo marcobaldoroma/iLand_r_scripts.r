@@ -107,10 +107,6 @@ volume_year <- hist(spvol$volume_m3)
 summary (volume_year)
 
 
-# sort by year volume of the stand (total)
-
-# div_stand <- spvol$volume_m3 [,1:23]
-
 
 ___________________________________________________________ Knitr Report _____________________________________________________________________________
 
