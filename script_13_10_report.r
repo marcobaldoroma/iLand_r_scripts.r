@@ -83,15 +83,15 @@ stid3 <- ggplot(x6, aes(year, volume)) + geom_area() + ggtitle("Stand ID 70 (are
 stid3 + theme(plot.title =element_text(hjust = 0.5))
 
 # volume-year x stand colour by species
-spvol <- filter(stand, rid == "8411")
+spvol <- filter(stand, ru == "1")
 ggplot(spvol, aes(year,volume_m3, fill=species))+
   geom_area()
 
-spvol2 <- filter(stand, rid == "19809")
+spvol2 <- filter(stand, ru == "9")
 ggplot(spvol2, aes(year,volume_m3, fill=species))+
   geom_area()
 
-spvol2 <- filter(stand, rid == "9086")
+spvol2 <- filter(stand, ru == "56")
 ggplot(spvol2, aes(year,volume_m3, fill=species))+
   geom_area()
 
