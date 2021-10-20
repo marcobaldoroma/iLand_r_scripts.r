@@ -1,10 +1,159 @@
+
+                                                 ###   2° SCRIPT REPORT ON FOREST MODELLING DATA ANALYSIS  ###
+
+
 # Hi Marco, I made a new simpler management script + csv table.   Will send you a bit later and you can replace it with the older one, and can try this one out too.  It will be now all stands in STP2, that shelterwood, and can look there these regeneration cuts even easier I think.  (and we will go on with this in the future, to set in the script to change STP automatically based on for example spruce proportion in the stand. And not having it fixed in time, just allow to dynamically set by the model, as the species distribution changes in the stand)
+# # I SELECTED SEVERAL STANDS FROM THE SECOND MODEL ANALYZED APPLIED IN THE CZECH REPUBLIC CASE STUDY OF RESONATE. AS IN THE FIRST MODEL CASE, I SELECTED THE WOOD VOLUME AS AN INDEPENDENT VARIABLE OF THE SYSTEM MODELLED WITH THE ILAND MODEL AND THE TIME+THE AREA (RU) AS DEPENDENT VARIABLES. ONE OF THE MAIN WORKS WAS SELECTING STANDS WITH DIFFERENT STP AND SPECIES COMPOSITION/BIODIVERSITY. IN THIS CASE STUDY I BEFORE USED A TIME SERIES OF 15 YEARS SIMULATED WITH A JAVASCRIPT 1. IN THE SECOND PART I USED THE JAVASCRIPT 2 IN WHICH MOSTLY CHANGED THE INITIAL SPECIES COMPOSITION AND MANAGEMENT PROCESS (AGENT) AND THE TIME SERIES OF THE FOREST MODEL ILAND APPLIED IN THE KOSTELEC STUDY AREA.
+# THE STADY WAS INCENTRED IN STAND TRATEMENT PROGRAM MANAGEMENT 1
+# now it works like:  script checks the species distribution at the stand in year0: if spruce proportion>50% then select STP1, if less then 50% it is STP2.   Plus in each 5 years it check it again, and decide on the STPs again based on the species proportion. So this way it can change in time during the simulation.
+# Same are different initial status, much longer time series to se the rotation entire 160 years
 
+
+                                                                        # STP1 = ABIES ALBA > 50% IN VOLUME M3/HA
+                                                                        # STP2 = ABIES ALBA < 50% V m3/ha 
 # first jvscrip
+                                  
+
+                             #### first report for iLand #######
+                                  
+
+# install.packages("RSQLite")
+library(RSQLite)
 
 
 
-___________________________________________________________ Knitr Report _____________________________________________________________________________
+file<-"D:/TEST_folder_2/output/subregion_medium_test1.sqlite"   # file to read
+
+
+sqlite.driver <- dbDriver("SQLite")
+db1 <- dbConnect(sqlite.driver, dbname = file)  # connect to the file
+tables.in.the.file<-dbListTables(db1)           # explore the tables in the file
+print(tables.in.the.file)
+
+
+#-----------------------------------------------
+# READ IN different tables:    
+
+carbon <- dbReadTable(db1,"carbon")
+# wind <- dbReadTable(db1,"wind")
+# barkbeetle <- dbReadTable(db1,"barkbeetle")
+# lremoved <- dbReadTable(db1,"landscape_removed")
+landscape <- dbReadTable(db1,"landscape")
+abeStand <- dbReadTable(db1, "abeStand")
+stand <- dbReadTable(db1, "stand")
+
+dbDisconnect(db1)    # close the file
+
+# Make a plot with ggplot, volume, colored by species....
+
+library(ggplot2)
+ landscape <- ggplot(landscape, aes(year,volume_m3, fill=species))+
+  geom_area() + ggtitle("Cz Landscape scale wood volume m3/ha")
+landscape+ theme(plot.title =element_text(hjust = 0.5))
+
+# ggplot(abeStand, aes(year,volume, fill=standid))+   
+#   geom_line()
+
+library(dplyr)
+
+# subsetting: https://dplyr.tidyverse.org/reference/filter.html
+
+
+x <- filter(abeStand, standid == "2021")
+stid1 <-ggplot(x, aes(year,volume)) + 
+geom_area() + ggtitle("CZ Stand ID 2021 (Initial Volume 0.0 m3, area 4.5 ha)")
+stid1 + theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(x, aes(dbh, volume)) + 
+  ggtitle("Stand RU 2742/ correlation dbh - volume(m3)") +
+  geom_line(colour = "blue")
+
+
+x1 <- filter(abeStand, standid == "414")
+stid2 <- ggplot(x1, aes(year,volume)) + 
+geom_area() + ggtitle("CZ Stand ID 414 (initial volume 1411 m3, area 17 ha)")
+stid2 + theme(plot.title = element_text(hjust = 0.5))
+
+
+x2 <- filter(abeStand, standid== "2032")
+stid3 <- ggplot(x2, aes(year, volume)) + 
+geom_area() + ggtitle("CZ Stand ID 2032 (initial volume 359 m3, area 10 ha)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
+
+# Title of the graphics : # http://www.sthda.com/english/wiki/ggplot2-title-main-axis-and-legend-titles
+# +ggtitle("theme_tufte()") 
+# GGPlot2 essentials r
+# Machine Learning essentials r
+# Practical Guide for Cluster Analysis essential r (unsupervised machine learning)
+
+
+x3 <- filter(abeStand, standid == "428")
+stid3 <- ggplot(x3, aes(year, volume)) + 
+  geom_area() + ggtitle("CZ Stand ID 428 (initial volume 1868 m3, area 0.7)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
+
+
+x4 <- filter(abeStand, standid == "417")
+stid3 <- ggplot(x4, aes(year, volume)) + 
+  geom_area() + ggtitle("CZ Stand ID 417 (initial volume 3.6, area 9 ha)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
+
+
+x5 <- filter(abeStand, standid == "68")
+stid3 <- ggplot(x5, aes(year, volume)) + 
+  geom_area() + ggtitle("Cz Stand ID 68 (int. volume 207.12 m3, 3.34 ha)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
+
+x6 <- filter(abeStand, standid == "749")
+stid3 <- ggplot(x6, aes(year, volume)) + 
+  geom_area() + ggtitle("Cz Stand ID 68 (int. volume 30 m3, 0.97 ha)")
+stid3 + theme(plot.title =element_text(hjust = 0.5))
+
+
+# volume-year x stand colour by species
+spvol <- filter(stand, ru == "2742")
+stid_2742<- ggplot(spvol, aes(year,volume_m3, fill=species)) + 
+  geom_area() + ggtitle("Cz Stand ID 2742 (STP1 -> STP2)")
+stid_2742+ theme(plot.title =element_text(hjust = 0.5))
+
+
+spvol2 <- filter(stand, ru == "247")
+stid247 <- ggplot(spvol2, aes(year,volume_m3, fill=species))+
+  geom_area() + ggtitle("Cz Stand ID 247 (STP2)")
+stid247 + theme(plot.title =element_text(hjust = 0.5))
+
+
+spvol3 <- filter(stand, ru == "2224")
+stid2224 <- ggplot(spvol3, aes(year,volume_m3, fill=species)) +
+  geom_area() + ggtitle("Cz Stand ID 2224 (STP1)")
+stid2224 + theme(plot.title =element_text(hjust = 0.5))
+
+
+spvol4 <- filter(stand, ru == "2219")
+stid4 <- ggplot(spvol4, aes(year,volume_m3, fill=species)) +
+  geom_area() + ggtitle("Cz Stand ID 2219 (STP2)")
+stid4 + theme(plot.title =element_text(hjust = 0.5))
+
+
+spvol5 <- filter(stand, ru == "1589")
+stid5 <- ggplot(spvol5, aes(year,volume_m3, fill=species))+
+  geom_area() + ggtitle("Cz Stand ID 1589 (STP2 -> STP1)")
+stid5 + theme(plot.title =element_text(hjust = 0.5))
+
+
+summary(spvol$volume_m3)
+
+boxplot(spvol$volume_m3)
+
+z <- log10(spvol$volume_m3)
+
+boxplot(z)
+
+volume_year <- hist(spvol$volume_m3) 
+summary (volume_year)
+
+
+#___________________________________________________________ Knitr script Report 19_10 _____________________________________________________________________________
 
 # needed to work properly with latex
 
@@ -21,9 +170,9 @@ library (tinytex)         # librerie necessarie
 # I hided only warnings #delete the warning, message and codes in the report.
 # To hide the warnings use the code here or go in the link to study other functionalities
 
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
+# knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
 
-stitch("D:/iLand.r/report_13_10/script_13.10_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))  
+stitch("D:/iLand.r/script_19_10_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))  
 
 
 
