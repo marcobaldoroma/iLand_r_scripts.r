@@ -31,7 +31,7 @@
                                   
 
 
-# ____________________________________________________ R script 26/10/2021 __________________________________________________________________________________________
+# ____________________________________________________ R script 27/10/2021 __________________________________________________________________________________________
                                   
 
 # install.packages("RSQLite")
@@ -39,7 +39,11 @@ library(RSQLite)
 
 
 
-file<-"D:/TEST_folder_2/output/subregion_medium_test1.sqlite"   # file to read
+file<-"D:/TEST3_folder/output/subregion_medium_test1.sqlite"   # file to read
+
+# second script in TEST3_p2_folder -> abe -> tatra.JS (add planting activities)
+# file<-"C:/TEST3_folder_p2/output/subregion_medium_test2.sqlite" 
+
 
 
 sqlite.driver <- dbDriver("SQLite")
@@ -51,6 +55,7 @@ print(tables.in.the.file)
 #-----------------------------------------------
 # READ IN different tables:    
 
+abeStandRemoval <- dbReadTable(db1,"abeStandRemoval")
 carbon <- dbReadTable(db1,"carbon")
 # wind <- dbReadTable(db1,"wind")
 # barkbeetle <- dbReadTable(db1,"barkbeetle")
@@ -177,7 +182,11 @@ library (tinytex)         # librerie necessarie
 
 # knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
 
-stitch("D:/iLand.r/script_19_10_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))
+stitch("D:/iLand.r/script_27_10_report.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))
+
+######## test3 report pt2
+
+# stitch("C:/iLand.r/script_27_10_report_p2.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))
 
 
 #________________________________________________________ JAVA Script 26/10/2021 MANAGEMENT ________________________________________________________________________
