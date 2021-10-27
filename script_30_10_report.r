@@ -3,10 +3,12 @@
 
 rm(list=ls())
 library(RSQLite)
+install.packages("field")
 library(fields)
 library(ggplot2)
 library(gridExtra)
 library(dplyr)
+install.packages("cowplot")
 library(cowplot)
 
 #2021.10.26.
@@ -14,9 +16,9 @@ library(cowplot)
 
 # set the dataroot to the output folder:
 
-dataroot<-"D:/_iLand_SK_region/run/TEST_folder/output/"
+dataroot<-"D:/iLand/TEST3_folder/output/"
 
-file1<-paste0(dataroot,"subregion_medium_test3.sqlite")
+file1<-paste0(dataroot,"subregion_medium_test1.sqlite") 
 
 
 
@@ -42,7 +44,7 @@ harvest.rates<-data.frame (abestand.removal %>% summarise(volumeThinning=sum(vol
                                                         volumeFinal=sum(volumeFinal), 
                                                         volumeSalvaged=sum(volumeSalvaged), 
                                                         volumeDisturbed=sum(volumeDisturbed)))
- head(abeUnit)
+head(abeUnit)
 plot(abeUnit$realizedHarvest)
 plot(abeUnit$finalHarvest)
                     
