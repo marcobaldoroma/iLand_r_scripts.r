@@ -1,7 +1,7 @@
 #######    R analysis on the iLand landscape model dataset "subregion_medium_likas"   #####################
 #          tatra_lukas.js;  SK_NORMAL_MEDIUM_T3,  Lukas Bilek silviculture management of CZ case study, but using the landscape model of Slovakia case study
 #          the stp we call 3 and is related to the silviculture management of site type 3 poor and acidic soils.
-#          NB is only a test......
+#          NB is only a test...... and the activeties are based on volume
 
 rm(list=ls())
 library(RSQLite)
