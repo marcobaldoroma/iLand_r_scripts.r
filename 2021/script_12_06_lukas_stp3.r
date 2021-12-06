@@ -30,6 +30,7 @@ print(tables.in.the.file)
 
 # READ IN the datatables:
 abestand <- dbReadTable(db1,"abeStand")
+abestand.removal <- dbReadTable(db1,"abeStandRemoval")
 carbon <- dbReadTable(db1,"carbon")
 carbonflow <- dbReadTable(db1,"carbonflow")
 abeUnit <- dbReadTable(db1,"abeUnit")
