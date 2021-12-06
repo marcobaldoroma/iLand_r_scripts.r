@@ -1,7 +1,7 @@
 #######    R analysis on the iLand landscape model dataset "subregion_medium_likas"   #####################
 #          tatra_lukas.js;  SK_NORMAL_MEDIUM_T3,  Lukas Bilek silviculture management of CZ case study, but using the landscape model of Slovakia case study
 #          the stp we call 3 and is related to the silviculture management of site type 3 poor and acidic soils.
-#          NB is only a test...... and the activeties are based on volume
+#          NB is only a test...... and the activeties are based on volume 
 
 rm(list=ls())
 library(RSQLite)
@@ -16,7 +16,7 @@ library(cowplot)
 
 # set the dataroot to the output folder:
 
-dataroot<-"D:/TEST_folder_2/output/"
+dataroot<-"C:/TEST_folder_2/output/"
 
 file1<-paste0(dataroot,"subregion_medium_lukas.sqlite")            # with planting activity and useSustainableHarvest 0.2
 
@@ -46,8 +46,9 @@ dbDisconnect(db1)
 summary(abestand.removal)
 harvest.rates<-data.frame (abestand.removal %>% summarise(volumeThinning=sum(volumeThinning), 
                                                           volumeFinal=sum(volumeFinal), 
-                                                          volumeSalvaged=sum(volumeSalvaged), 
                                                           volumeDisturbed=sum(volumeDisturbed)))
+
+# In reality we haven't the Salvaged management, I left in the script only for comodity
 
 head(abeUnit)
 plot(abeUnit$realizedHarvest)
@@ -87,10 +88,10 @@ for (cases in 1:length(mystands)) {
   mystand<-mystands[cases]
   myru<-myrus[cases]
   
-  outputfilename<-"useSustainableHarvest_02_200ys"
+  outputfilename<-"use_CZU_Silviculture_activities_acidicsites_stp3_120ys"
   # outputfilename<-"useSustainableHarvest_05_200ys"
   # outputfilename<-"useSustainableHarvest_08_200ys"
-  pdf(paste0(dataroot,outputfilename,"__",mystand,"__",myru,".pdf"), height = 10,width=12)   # create the file, give title, layout
+  pdf(paste0(dataroot,outputfilename,"__",mystand,"__",myru,".pdf"), height = 10,width=12)   # create the PDF , give title, layout
   
   
   colors<-c("orange","limegreen","tomato","skyblue")
@@ -114,12 +115,12 @@ for (cases in 1:length(mystands)) {
   
   number.of.activites<-nrow(abestand.removal1)
   nyears<-max(stand1$year)
-  removals<-data.frame(year=c(1:nyears),volumeThinning=0 , volumeFinal=0, volumeSalvaged=0,volumeDisturbed=0 )
+  removals<-data.frame(year=c(1:nyears),volumeThinning=0 , volumeFinal=0,volumeDisturbed=0 )
   tofill<-match(abestand.removal1$year,removals$year)
   
   removals$volumeThinning[tofill] <-abestand.removal1$volumeThinning
   removals$volumeFinal[tofill]    <-abestand.removal1$volumeFinal
-  removals$volumeSalvaged[tofill] <-abestand.removal1$volumeSalvaged
+  #removals$volumeSalvaged[tofill] <-abestand.removal1$volumeSalvaged
   removals$volumeDisturbed[tofill]<-abestand.removal1$volumeDisturbed
   print(removals)
   #---------------------------------------------START TO MAKE PLOTS
@@ -135,7 +136,7 @@ for (cases in 1:length(mystands)) {
   
   ytitle2<-expression(paste("Removed volume"))
   mtext(ytitle2, side=4, line=3, at=400, cex=0.8)#,cex.lab=0.02)
-  legend("right", c( "thinning/regcut","finalcut","salvaged", "disturbed"), cex=1, bty="n", fill=colors, text.font=2)
+  legend("right", c( "thinning","finalcut", "disturbed"), cex=1, bty="n", fill=colors, text.font=2)
   
   
   for (i in 7:ncol(abestand)) {
@@ -146,7 +147,9 @@ for (cases in 1:length(mystands)) {
   tending<-which(abestand.removal1$activity=="clearcut_sw"&abestand.removal1$volumeFinal==0)
   abestand.removal1$activity[tending]<- "tending"
   print(abestand.removal1)
-  ############################################################# WORK WITH THE DYNAMICSTAND OUTPUT #######################
+ 
+  
+############################################################# WORK WITH THE DYNAMICSTAND OUTPUT #######################
   
   species<-unique(dynamicstand1$species)
   
